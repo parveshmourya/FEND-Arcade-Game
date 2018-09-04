@@ -6,26 +6,7 @@ function winPopup() {
         // Get the modal
         var modal = document.getElementById('myModal');
      
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on the button, open the modal 
-
         modal.style.display = "block";
-
-       
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
     }, 200)
 }
 
@@ -103,22 +84,8 @@ var Player = function(x, y) {
 @description Represents Player position update method
 @param {int} dt - a time delta between ticks
 */
-Player.prototype.update = function(dt) {
-    //control if the movement is beyond the canvas
-    if (this.y > 380)
-        this.y = 380;
-    if (this.x < 0)
-        this.x = 0;
-    if (this.x > 400)
-        this.x = 400;
-
-    //for the top i.e. for the winning condition
-    if (this.y < 0) {
-        console.log(this.y);
-        this.y = -28;
-        winPopup();
-    }
-
+Player.prototype.update = function() {
+    
 };
 
 /*
@@ -126,21 +93,38 @@ Player.prototype.update = function(dt) {
 @param {string} key - a time delta between ticks
 */
 Player.prototype.handleInput = function(key) {
+    if(this.y <= 60){
+        console.log(this.y);
+        this.y = -28;
+        winPopup();
+    }
+    else{
+
     switch (key) {
         case 'up':
+            console.log(this.y);
             this.y -= 80;
+            console.log(this.y);
             break;
         case 'right':
-            this.x += 100;
+            if (this.x >= 400){this.x = 400;}
+            else{this.x += 100;}
             break;
         case 'down':
-            this.y += 80;
+            console.log(this.y);
+            if(this.y >= 380){
+                this.y = 380;
+            }    
+            else { this.y += 80; }     
             break;
         case 'left':
-            this.x -= 100;
+            if (this.x <= 0)
+                {this.x = 0;}
+            else{this.x -= 100;}
             break;
     }
 
+    }
 };
 /*
 @description  Draw the player on the screen

@@ -1,4 +1,6 @@
-//winning popup
+/*
+@description Represents winning popup
+*/
 function winPopup() {
     setTimeout(function() {
         // Get the modal
@@ -27,7 +29,12 @@ function winPopup() {
     }, 200)
 }
 
-// Enemies our player must avoid
+/*
+@description Represents enemy
+@param {int} x - x position coordinate for enemy object  
+@param {int} y - y position coordinate for enemy object  
+@param {int} vel - the rate at which the position of enemy object will change
+*/
 var Enemy = function(x, y, vel) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -39,8 +46,10 @@ var Enemy = function(x, y, vel) {
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+/*
+@description Represents enemy position update method
+@param {int} dt - a time delta between ticks
+*/
 Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
@@ -52,9 +61,11 @@ Enemy.prototype.update = function(dt) {
         this.vel = 100 + Math.floor(Math.random() * 128)
     }
 
+    //collision check for the player and the enemy
     if (player.x > this.x - 60 && player.x < this.x + 50 && player.y < this.y + 50 && player.y > this.y-50) {
-        player.x = 200;
+        player.x = 200;     
         player.y = 380;
+
 
 
         // toggle background after collision between player and enemies
@@ -65,14 +76,18 @@ Enemy.prototype.update = function(dt) {
     }
 };
 
-// Draw the enemy on the screen, required method for game
+/*
+@description  Draw the enemy on the screen  
+*/
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+/*
+@description Represents Player
+@param {int} x - x position coordinate for Player object  
+@param {int} y - y position coordinate for Player object  
+*/
 var Player = function(x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -84,8 +99,10 @@ var Player = function(x, y) {
     this.sprite = 'images/char-boy.png';
 
 };
-// Update the player's position, required method for game
-// Parameter: dt, a time delta between ticks
+/*
+@description Represents Player position update method
+@param {int} dt - a time delta between ticks
+*/
 Player.prototype.update = function(dt) {
     //control if the movement is beyond the canvas
     if (this.y > 380)
@@ -103,7 +120,11 @@ Player.prototype.update = function(dt) {
     }
 
 };
-//handle the movement via. the keys
+
+/*
+@description Represents handling the movement via. the keys
+@param {string} key - a time delta between ticks
+*/
 Player.prototype.handleInput = function(key) {
     switch (key) {
         case 'up':
@@ -121,7 +142,9 @@ Player.prototype.handleInput = function(key) {
     }
 
 };
-// Draw the player on the screen, required method for game
+/*
+@description  Draw the player on the screen
+*/
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -141,8 +164,9 @@ enemyStartPosition.forEach(function(enemyYPos) {
 
 
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+/*
+@description  Event Listener for mapping keystroke event with their codes
+*/
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
